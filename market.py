@@ -11,6 +11,19 @@ logger = logging.getLogger(__file__)
 
 
 def get_product_list(page, campaign_id, access_token):
+"""Получить список товаров
+
+Этот метод устарел. Пожалуйста, пользуйтесь вместо него POST businesses/{businessId}/offer-mappings.
+https://yandex.ru/dev/market/partner-api/doc/ru/reference/offer-mappings/getOfferMappingEntries
+!!!
+
+Аргументы:
+    page (str): Параметр строка -
+    campaign_id (int): Параметр число - id клиента .
+    access_token (str): Параметр строка - tokeb продавца, API-ключ.
+Функция вернет значение:
+    json: Возвращаемое значение - структура Список товаров - json вида
+"""
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -30,6 +43,15 @@ def get_product_list(page, campaign_id, access_token):
 
 
 def update_stocks(stocks, campaign_id, access_token):
+"""Получить список товаров
+    Аргументы:
+        stocks (StockDTO[]): Данные об остатках товаров
+        campaign_id (int): Параметр число - id клиента .
+        access_token (str): Параметр строка - tokeb продавца, API-ключ.
+    Функция вернет значение:
+        json: Возвращаемое значение - структура Список товаров - json вида
+"""
+
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -46,6 +68,15 @@ def update_stocks(stocks, campaign_id, access_token):
 
 
 def update_price(prices, campaign_id, access_token):
+"""Обновить прайс
+    Аргументы:
+        prices (list): Данные об остатках товаров
+        campaign_id (int): Параметр число - id клиента .
+        access_token (str): Параметр строка - tokeb продавца, API-ключ.
+    Функция вернет значение:
+        json: Возвращаемое значение - структура Список товаров - json вида
+"""
+
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -62,7 +93,13 @@ def update_price(prices, campaign_id, access_token):
 
 
 def get_offer_ids(campaign_id, market_token):
-    """Получить артикулы товаров Яндекс маркета"""
+"""Получить артикулы товаров Яндекс маркета
+    Аргументы:
+        campaign_id (int): Параметр число - id клиента .
+        market_token (str): Параметр строка - tokeb продавца, API-ключ.
+    Функция вернет значение:
+        offer_ids: Список товаров
+"""
     page = ""
     product_list = []
     while True:
@@ -78,6 +115,15 @@ def get_offer_ids(campaign_id, market_token):
 
 
 def create_stocks(watch_remnants, offer_ids, warehouse_id):
+"""Создать остатки товаров Яндекс маркета
+    Аргументы:
+        watch_remnants (list): Перечень товаров
+        offer_ids (list): Артикулы товаров
+        warehouse_id (int): Склад
+    Функция вернет значение:
+        stocks: Список товаров
+"""
+
     # Уберем то, что не загружено в market
     stocks = list()
     date = str(datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z")
@@ -123,6 +169,13 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
 
 
 def create_prices(watch_remnants, offer_ids):
+"""Создать остатки товаров Яндекс маркета
+    Аргументы:
+        watch_remnants (list): Перечень товаров
+        offer_ids (list): Артикулы товаров
+    Функция вернет значение:
+        prices: Список товаров цен
+"""
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
@@ -143,6 +196,14 @@ def create_prices(watch_remnants, offer_ids):
 
 
 async def upload_prices(watch_remnants, campaign_id, market_token):
+"""Обновить прайс
+    Аргументы:
+        watch_remnants (list): Перечень товаров
+        campaign_id (int): Параметр число - id клиента .
+        market_token (str): Параметр строка - tokeb продавца, API-ключ.
+    Функция вернет значение:
+        prices: Список товаров цен
+"""
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
     for some_prices in list(divide(prices, 500)):
@@ -151,6 +212,17 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
 
 
 async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id):
+"""Обновить остатки
+    Аргументы:
+        watch_remnants (list): Перечень товаров
+        campaign_id (int): Параметр число - id клиента .
+        market_token (str): Параметр строка - tokeb продавца, API-ключ.
+        warehouse_id (int): Склад
+    Функция вернет значение:
+        not_empty: Список
+        stocks: Список
+"""
+
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)
     for some_stock in list(divide(stocks, 2000)):
