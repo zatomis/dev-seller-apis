@@ -20,7 +20,7 @@ def get_product_list(page, campaign_id, access_token):
     Аргументы:
         page (str): Параметр строка -
         campaign_id (str): Параметр строка - номер раздела.
-        access_token (str): Параметр строка - tokeb продавца, API-ключ.
+        access_token (str): Параметр строка - token продавца, API-ключ.
     Функция вернет значение:
         словарь (dict) : Возвращаемое значение - структура Список товаров - json вида
     """
@@ -45,11 +45,11 @@ def get_product_list(page, campaign_id, access_token):
 def update_stocks(stocks, campaign_id, access_token):
     """Получить список товаров
         Аргументы:
-            stocks (StockDTO[]): Данные об остатках товаров
+            stocks: Данные об остатках товаров - список
             campaign_id (int): Параметр число - id клиента .
-            access_token (str): Параметр строка - tokeb продавца, API-ключ.
+            access_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            json: Возвращаемое значение - структура Список товаров - json вида
+            json: Возвращаемое значение - структура Список товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -71,7 +71,7 @@ def update_price(prices, campaign_id, access_token):
         Аргументы:
             prices (list): Данные об остатках товаров
             campaign_id (int): Параметр число - id клиента .
-            access_token (str): Параметр строка - tokeb продавца, API-ключ.
+            access_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
             json: Возвращаемое значение - структура Список товаров - json вида
     """
@@ -94,7 +94,7 @@ def get_offer_ids(campaign_id, market_token):
     """Получить артикулы товаров Яндекс маркета
         Аргументы:
             campaign_id (int): Параметр число - id клиента .
-            market_token (str): Параметр строка - tokeb продавца, API-ключ.
+            market_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
             offer_ids: Список товаров
     """
@@ -197,7 +197,7 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
         Аргументы:
             watch_remnants (list): Перечень товаров
             campaign_id (int): Параметр число - id клиента .
-            market_token (str): Параметр строка - tokeb продавца, API-ключ.
+            market_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
             prices: Список товаров цен
     """
@@ -213,7 +213,7 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
         Аргументы:
             watch_remnants (list): Перечень товаров
             campaign_id (int): Параметр число - id клиента .
-            market_token (str): Параметр строка - tokeb продавца, API-ключ.
+            market_token (str): Параметр строка - token продавца, API-ключ.
             warehouse_id (int): Склад
         Функция вернет значение:
             not_empty: Список
