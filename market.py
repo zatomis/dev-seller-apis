@@ -12,17 +12,12 @@ logger = logging.getLogger(__file__)
 
 def get_product_list(page, campaign_id, access_token):
     """Получить список товаров
-
-    Этот метод устарел. Пожалуйста, пользуйтесь вместо него POST businesses/{businessId}/offer-mappings.
-    https://yandex.ru/dev/market/partner-api/doc/ru/reference/offer-mappings/getOfferMappingEntries
-    !!!
-
     Аргументы:
-        page (str): Параметр строка -
+        page (str): Параметр строка
         campaign_id (str): Параметр строка - номер раздела.
         access_token (str): Параметр строка - token продавца, API-ключ.
     Функция вернет значение:
-        словарь (dict) : Возвращаемое значение - структура Список товаров - json вида
+        словарь (dict) : Возвращаемое значение - Список товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -49,7 +44,7 @@ def update_stocks(stocks, campaign_id, access_token):
             campaign_id (int): Параметр число - id клиента .
             access_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            json: Возвращаемое значение - структура Список товаров
+            Возвращаемое значение - Список товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -73,7 +68,7 @@ def update_price(prices, campaign_id, access_token):
             campaign_id (int): Параметр число - id клиента .
             access_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            json: Возвращаемое значение - структура Список товаров - json вида
+            Возвращаемое значение - Список товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -93,7 +88,7 @@ def update_price(prices, campaign_id, access_token):
 def get_offer_ids(campaign_id, market_token):
     """Получить артикулы товаров Яндекс маркета
         Аргументы:
-            campaign_id (int): Параметр число - id клиента .
+            campaign_id (int): Параметр число - id клиента
             market_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
             offer_ids: Список товаров
@@ -119,7 +114,7 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
             offer_ids (list): Артикулы товаров
             warehouse_id (int): Склад
         Функция вернет значение:
-            stocks: Список товаров
+            Список товаров (list)
     """
     # Уберем то, что не загружено в market
     stocks = list()
@@ -171,7 +166,7 @@ def create_prices(watch_remnants, offer_ids):
             watch_remnants (list): Перечень товаров
             offer_ids (list): Артикулы товаров
         Функция вернет значение:
-            prices: Список товаров цен
+            prices (list): Список товаров цен
     """
     prices = []
     for watch in watch_remnants:

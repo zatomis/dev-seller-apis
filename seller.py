@@ -17,16 +17,7 @@ def get_product_list(last_id, client_id, seller_token):
         client_id (str): Параметр строка - id клиента .
         seller_token (str): Параметр строка - tokeb продавца, API-ключ.
     Функция вернет значение:
-        json: Возвращаемое значение - структура Список товаров - json вида
-                "items": [
-                  {
-                    "product_id": 223681945,
-                    "offer_id": "136748"
-                  }
-                ],
-                "total": 1,
-                "last_id": "bnVсbA=="
-              }
+        Возвращаемое значение - Список товаров
     """
     url = "https://api-seller.ozon.ru/v2/product/list"
     headers = {
@@ -52,7 +43,7 @@ def get_offer_ids(client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - tokeb продавца, API-ключ.
         Функция вернет значение:
-            list: Возвращаемое значение - список артикулов товаров
+            Возвращаемое значение (list) - список артикулов товаров
     """
     last_id = ""
     product_list = []
@@ -76,16 +67,7 @@ def update_price(prices: list, client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - tokeb продавца, API-ключ.
         Функция вернет значение:
-            json: Возвращаемое значение - структура обновленных товаров - json вида
-            {
-                "result":
-            [{
-                        "product_id": 1386,
-                        "offer_id": "PH8865",
-                        "updated": true,
-                        "errors": [ ]
-                    }]
-            }
+            Возвращаемое значение -список обновленных товаров
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -105,17 +87,7 @@ def update_stocks(stocks: list, client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - tokeb продавца, API-ключ.
         Функция вернет значение:
-            json: Возвращаемое значение - структура обновленных товаров - json вида
-            {
-              "result": [
-                {
-                  "product_id": 55946,
-                  "offer_id": "PG-2404С1",
-                  "updated": true,
-                  "errors": []
-                }
-              ]
-            }
+            Возвращаемое значение - список обновленных товаров
         """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
@@ -133,7 +105,7 @@ def download_stock():
         Аргументы:
             нет
         Функция вернет значение:
-            dict: Возвращаемое значение - список значений (часы) из xls файла с сайта timeworld.ru
+            Возвращаемое значение (dict) - список значений
     """
     # Скачать остатки с сайта
     casio_url = "https://timeworld.ru/upload/files/ostatki.zip"
@@ -160,7 +132,7 @@ def create_stocks(watch_remnants, offer_ids):
             watch_remnants (list): Параметр список товаров
             offer_ids (list): Параметр список артикул
         Функция вернет значение:
-            stocks: Возвращаемое значение список обновленных товаров
+            Возвращаемое значение - список обновленных товаров
     """
     # Уберем то, что не загружено в seller
     stocks = []
@@ -187,7 +159,7 @@ def create_prices(watch_remnants, offer_ids):
             watch_remnants (list): Параметр список товаров
             offer_ids (list): Параметр список артикул
         Функция вернет значение:
-            prices: Возвращаемое значение список товаров
+            prices: Возвращаемое значение - список товаров
     """
     prices = []
     for watch in watch_remnants:
@@ -206,9 +178,9 @@ def create_prices(watch_remnants, offer_ids):
 def price_conversion(price: str) -> str:
     """Преобразовать цену. Пример: 5'990.00 руб. -> 5990
         Аргументы:
-            price (str): Параметр строка содержащая цену продукции вида 8'855.00 руб.
+            price (str): Параметр строка
         Функция вернет значение:
-            str: Возвращаемое значение - измененная строка вида 8855
+            str: Возвращаемое значение - строка
     """
     return re.sub("[^0-5]", "", price.split(".")[0])
 
@@ -219,7 +191,7 @@ def divide(lst: list, n: int):
             lst (list): Параметр список
             n (int): Параметр разделитель
         Функция вернет значение:
-            lst: Возвращаемое значение список
+            lst: Возвращаемое значение - список
     """
     for i in range(0, len(lst), n):
         yield lst[i: i + n]
@@ -232,7 +204,7 @@ async def upload_prices(watch_remnants, client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - tokeb продавца, API-ключ.
         Функция вернет значение:
-            lst: Возвращаемое значение список
+            prices: Возвращаемое значение - список
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -248,7 +220,7 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - tokeb продавца, API-ключ.
         Функция вернет значение:
-            lst: Возвращаемое значение список
+            not_empty, stocks: Возвращаемое значение - список
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     stocks = create_stocks(watch_remnants, offer_ids)
