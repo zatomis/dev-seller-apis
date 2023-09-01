@@ -11,13 +11,13 @@ logger = logging.getLogger(__file__)
 
 
 def get_product_list(page, campaign_id, access_token):
-    """Получить список товаров
+    """Получить Список товаров в каталоге
     Аргументы:
-        page (str): Параметр строка
-        campaign_id (str): Параметр строка - номер раздела.
+        page (str): Идентификатор страницы c результатами.
+        campaign_id (str): Идентификатор кампании и идентификатор магазина.
         access_token (str): Параметр строка - token продавца, API-ключ.
     Функция вернет значение:
-        словарь (dict) : Возвращаемое значение - Список товаров
+        словарь (dict) : Возвращаемое значение - Информация о товарах в каталоге.
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -40,11 +40,11 @@ def get_product_list(page, campaign_id, access_token):
 def update_stocks(stocks, campaign_id, access_token):
     """Получить список товаров
         Аргументы:
-            stocks: Данные об остатках товаров - список
-            campaign_id (int): Параметр число - id клиента .
+            stocks (list): Данные об остатках товаров
+            campaign_id (str): Параметр число - id клиента .
             access_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            Возвращаемое значение - Список товаров
+            Возвращаемое значение (dict): Список обновленных остатков
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -65,10 +65,10 @@ def update_price(prices, campaign_id, access_token):
     """Обновить прайс
         Аргументы:
             prices (list): Данные об остатках товаров
-            campaign_id (int): Параметр число - id клиента .
-            access_token (str): Параметр строка - token продавца, API-ключ.
+            campaign_id (str): id клиента
+            access_token (str): token продавца, API-ключ.
         Функция вернет значение:
-            Возвращаемое значение - Список товаров
+            Возвращаемое значение (dict): - Обновленные товары
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -112,7 +112,7 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
         Аргументы:
             watch_remnants (list): Перечень товаров
             offer_ids (list): Артикулы товаров
-            warehouse_id (int): Склад
+            warehouse_id (str): Идентификатор склада
         Функция вернет значение:
             Список товаров (list)
     """
@@ -166,7 +166,7 @@ def create_prices(watch_remnants, offer_ids):
             watch_remnants (list): Перечень товаров
             offer_ids (list): Артикулы товаров
         Функция вернет значение:
-            prices (list): Список товаров цен
+            prices (list): Список вида : код, цена, валюта
     """
     prices = []
     for watch in watch_remnants:
@@ -209,7 +209,7 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
             watch_remnants (list): Перечень товаров
             campaign_id (int): Параметр число - id клиента .
             market_token (str): Параметр строка - token продавца, API-ключ.
-            warehouse_id (int): Склад
+            warehouse_id (str): Идентификатор склада
         Функция вернет значение:
             not_empty: Список
             stocks: Список
@@ -222,7 +222,6 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
         filter(lambda stock: (stock.get("items")[0].get("count") != 0), stocks)
     )
     return not_empty, stocks
-
 
 def main():
     """
