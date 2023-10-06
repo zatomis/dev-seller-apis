@@ -63,7 +63,7 @@ def get_offer_ids(client_id, seller_token):
 def update_price(prices: list, client_id, seller_token):
     """Обновить цены товаров
         Аргументы:
-            prices (list): Параметр список
+            prices (list): список цен
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
@@ -205,7 +205,7 @@ async def upload_prices(watch_remnants, client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            prices: Возвращаемое значение (list): - список
+            prices: Возвращаемое значение (list): - список позиций прайса
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -221,7 +221,7 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
             client_id (str): Параметр строка - id клиента .
             seller_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            not_empty, stocks: Возвращаемое значение (list):- список
+            not_empty, stocks: Возвращаемое значение (list):- список не пустых остатков и все остатки
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     stocks = create_stocks(watch_remnants, offer_ids)

@@ -91,7 +91,7 @@ def get_offer_ids(campaign_id, market_token):
             campaign_id (int): Параметр число - id клиента
             market_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            offer_ids: Список товаров
+            offer_ids: (list): Список товаров
     """
     page = ""
     product_list = []
@@ -194,7 +194,7 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
             campaign_id (int): Параметр число - id клиента .
             market_token (str): Параметр строка - token продавца, API-ключ.
         Функция вернет значение:
-            prices: Список товаров цен
+            prices (list): Список товаров цен
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -210,9 +210,9 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
             campaign_id (int): Параметр число - id клиента .
             market_token (str): Параметр строка - token продавца, API-ключ.
             warehouse_id (str): Идентификатор склада
-        Функция вернет значение:
-            not_empty: Список
-            stocks: Список
+        Функция вернет :
+            not_empty (list): Список остатков не пустых
+            stocks (list): Список всех остатков
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)
